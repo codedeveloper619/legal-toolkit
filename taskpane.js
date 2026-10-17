@@ -1,5 +1,5 @@
 /*
- * Legal Toolkit: side panel (Attachments, Clauses, Matter, Check, Settings).
+ * Legal Toolkit: side panel (Attachments, Matter, Check, Settings).
  */
 (function () {
   "use strict";
@@ -44,7 +44,7 @@
   /* Navigation                                                          */
   /* ------------------------------------------------------------------ */
 
-  var views = ["attachments", "clauses", "matter", "check", "settings"];
+  var views = ["attachments", "matter", "check", "settings"];
   var opened = {};
 
   function show(view) {
@@ -56,7 +56,6 @@
     var first = !opened[view];
     opened[view] = true;
     if (view === "attachments" && first) Attachments.load();
-    if (view === "clauses" && first) Clauses.render();
     if (view === "matter") Matter.render();
     if (view === "check") Check.run();
     if (view === "settings") Settings.render();
@@ -488,158 +487,6 @@
     $("#att-scan").addEventListener("click", scan);
 
     return { load: load, getBase64: getBase64, fetchFileAttachments: fetchFileAttachments };
-  })();
-
-  /* ------------------------------------------------------------------ */
-  /* Clauses                                                             */
-  /* ------------------------------------------------------------------ */
-
-  var Clauses = (function () {
-    var pending = null;
-
-    function userClauses() {
-      return LT.roamingGet(LT.KEYS.clauses, []) || [];
-    }
-
-    function all() {
-      var mine = userClauses().map(function (c) { return Object.assign({ group: "My text", mine: true }, c); });
-      return mine.concat(CONFIG.clauses || []);
-    }
-
-    function fieldsOf(text) {
-      var seen = {}, out = [];
-      String(text).replace(/\{\{\s*([^}]+?)\s*\}\}/g, function (_, name) {
-        if (!seen[name.toLowerCase()]) {
-          seen[name.toLowerCase()] = true;
-          out.push(name);
-        }
-        return _;
-      });
-      return out;
-    }
-
-    function render() {
-      var q = LT.normalizeText($("#cl-search").value);
-      var wrap = $("#cl-list");
-      wrap.innerHTML = "";
-      var groups = {};
-      var order = [];
-      all().forEach(function (c) {
-        if (q && LT.normalizeText(c.title + " " + c.text).indexOf(q) === -1) return;
-        if (!groups[c.group]) {
-          groups[c.group] = [];
-          order.push(c.group);
-        }
-        groups[c.group].push(c);
-      });
-      if (!order.length) {
-        wrap.appendChild(el("p", { className: "empty", text: "No standard text matches “" + $("#cl-search").value + "”." }));
-        return;
-      }
-      order.forEach(function (g) {
-        var box = el("div", { className: "cl-group" }, [el("h3", { text: g })]);
-        groups[g].forEach(function (c) {
-          var preview = el("div", { className: "p", text: c.text.replace(/\{\{\s*([^}]+?)\s*\}\}/g, "[$1]") });
-          box.appendChild(
-            el("div", { className: "clause" }, [
-              el("div", { className: "t", text: c.title }),
-              el("div", { className: "btns" }, [
-                c.mine ? el("button", { className: "link danger", type: "button", text: "Delete", onclick: function () { remove(c); } }) : null,
-                el("button", { className: "link", type: "button", text: "Insert", onclick: function () { start(c); } })
-              ]),
-              preview
-            ])
-          );
-          preview.addEventListener("click", function () { preview.classList.toggle("expanded"); });
-        });
-        wrap.appendChild(box);
-      });
-    }
-
-    function start(clause) {
-      var fields = fieldsOf(clause.text);
-      if (!fields.length) {
-        insert(clause.text);
-        return;
-      }
-      pending = clause;
-      $("#cl-fill-title").textContent = clause.title;
-      var box = $("#cl-fields");
-      box.innerHTML = "";
-      fields.forEach(function (f, i) {
-        box.appendChild(el("label", {}, [f, el("input", { type: "text", "data-field": f, autocomplete: "off" })]));
-      });
-      $("#cl-fill").hidden = false;
-      $("#cl-fill").scrollIntoView({ block: "nearest" });
-      var firstInput = box.querySelector("input");
-      if (firstInput) firstInput.focus();
-    }
-
-    function fillAndInsert() {
-      if (!pending) return;
-      var values = {};
-      $("#cl-fields").querySelectorAll("input").forEach(function (i) {
-        values[i.getAttribute("data-field").toLowerCase()] = i.value.trim();
-      });
-      var text = pending.text.replace(/\{\{\s*([^}]+?)\s*\}\}/g, function (_, name) {
-        return values[name.toLowerCase()] || "[insert " + name + "]";
-      });
-      pending = null;
-      $("#cl-fill").hidden = true;
-      insert(text);
-    }
-
-    async function insert(text) {
-      try {
-        await LT.call(LT.item().body, "setSelectedDataAsync", LT.textToBodyHtml(text), { coercionType: Office.CoercionType.Html });
-        toast("Inserted.", "ok");
-      } catch (err) {
-        toast(errorText(err), "error");
-      }
-    }
-
-    async function add() {
-      var title = $("#cl-new-title").value.trim();
-      var text = $("#cl-new-text").value.trim();
-      if (!title || !text) {
-        toast("Add a title and the text.", "warn");
-        return;
-      }
-      var list = userClauses().concat([{ id: String(Date.now()), title: title, text: text }]);
-      if (JSON.stringify(list).length > 24000) {
-        toast("Your saved text is full. Delete something first.", "error");
-        return;
-      }
-      try {
-        await LT.roamingSet(LT.KEYS.clauses, list);
-        $("#cl-new-title").value = "";
-        $("#cl-new-text").value = "";
-        $("#cl-add").open = false;
-        render();
-        toast("Saved to My text.", "ok");
-      } catch (err) {
-        toast("Couldn't save: " + errorText(err), "error");
-      }
-    }
-
-    async function remove(clause) {
-      var list = userClauses().filter(function (c) { return c.id !== clause.id; });
-      try {
-        await LT.roamingSet(LT.KEYS.clauses, list);
-        render();
-        toast("Deleted.");
-      } catch (err) {
-        toast("Couldn't delete: " + errorText(err), "error");
-      }
-    }
-
-    $("#cl-search").addEventListener("input", render);
-    $("#cl-cancel").addEventListener("click", function () { pending = null; $("#cl-fill").hidden = true; });
-    $("#cl-insert").addEventListener("click", fillAndInsert);
-    $("#cl-fields").addEventListener("keydown", function (e) { if (e.key === "Enter") fillAndInsert(); });
-    $("#cl-save").addEventListener("click", add);
-
-    return { render: render };
   })();
 
   /* ------------------------------------------------------------------ */

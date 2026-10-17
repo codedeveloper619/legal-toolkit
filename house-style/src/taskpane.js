@@ -818,9 +818,12 @@
 
   function renderMockRibbon() {
     var ribbon = window.createRibbon(STYLE, fmt);
-    var bar = $("#demo-ribbon-controls");
+    var body = $("#demo-ribbon-body");
     var openMenu = null;
-    $("#demo-ribbon-label").textContent = ribbon.groupLabel;
+    var NOTES = {
+      house: "House Style tab: shown in classic Outlook for Windows. Outlook on Mac, on the web and new Outlook don’t show add-in tabs; there, the same tools are in the group on the Message tab.",
+      message: "Message tab group: shown in every Outlook, including Mac. In new Outlook and on the web it may sit under Apps until pinned.",
+    };
     $("#demo-notice-close").addEventListener("click", function () { $("#demo-notice").hidden = true; });
 
     function closeMenu() {
@@ -847,60 +850,87 @@
     }
     function keepCursor(e) { e.preventDefault(); } // clicking the ribbon doesn't move the cursor
 
-    ribbon.controls.forEach(function (c) {
+    function controlButton(c) {
       var b = el("button", "rb-control");
       b.type = "button";
       b.title = c.tip;
+      b.dataset.id = c.id;
       var img = el("img");
       img.src = iconSrc(c.icon);
       img.alt = "";
       b.appendChild(img);
-      b.appendChild(el("span", null, c.label));
+      b.appendChild(el("span", "rb-label", c.label));
       b.addEventListener("mousedown", keepCursor);
-      if (c.type === "menu") {
-        b.appendChild(el("span", "caret", "▼"));
-        b.setAttribute("aria-haspopup", "menu");
-        b.setAttribute("aria-expanded", "false");
-        b.addEventListener("click", function () {
-          var same = openMenu && openMenu.button === b;
-          closeMenu();
-          if (same) return;
-          var menu = el("div", "rb-menu");
-          menu.setAttribute("role", "menu");
-          menu.setAttribute("aria-label", c.label);
-          c.items.forEach(function (it) {
-            var mi = el("button", "rb-item");
-            mi.type = "button";
-            mi.setAttribute("role", "menuitem");
-            mi.title = it.tip;
-            var ic = el("img");
-            ic.src = iconSrc(it.icon);
-            ic.alt = "";
-            mi.appendChild(ic);
-            mi.appendChild(el("span", null, it.label));
-            mi.dataset.fn = it.fn || "";
-            mi.dataset.id = it.id;
-            mi.addEventListener("mousedown", keepCursor);
-            mi.addEventListener("click", function () { activate(it); });
-            menu.appendChild(mi);
-          });
-          document.body.appendChild(menu);
-          var r = b.getBoundingClientRect();
-          var left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8));
-          menu.style.left = left + "px";
-          menu.style.top = r.bottom + 2 + "px";
-          b.setAttribute("aria-expanded", "true");
-          openMenu = { button: b, menu: menu };
-          menu.addEventListener("keydown", function (e) {
-            if (e.key === "Escape") { closeMenu(); b.focus(); }
-          });
-        });
-      } else {
+      if (c.type !== "menu") {
         b.addEventListener("click", function () { activate(c); });
+        return b;
       }
-      b.dataset.id = c.id;
-      bar.appendChild(b);
+      b.appendChild(el("span", "caret", "▼"));
+      b.setAttribute("aria-haspopup", "menu");
+      b.setAttribute("aria-expanded", "false");
+      b.addEventListener("click", function () {
+        var same = openMenu && openMenu.button === b;
+        closeMenu();
+        if (same) return;
+        var menu = el("div", "rb-menu");
+        menu.setAttribute("role", "menu");
+        menu.setAttribute("aria-label", c.label);
+        c.items.forEach(function (it) {
+          var mi = el("button", "rb-item");
+          mi.type = "button";
+          mi.setAttribute("role", "menuitem");
+          mi.title = it.tip;
+          var ic = el("img");
+          ic.src = iconSrc(it.icon);
+          ic.alt = "";
+          mi.appendChild(ic);
+          mi.appendChild(el("span", null, it.label));
+          mi.dataset.fn = it.fn || "";
+          mi.dataset.id = it.id;
+          mi.addEventListener("mousedown", keepCursor);
+          mi.addEventListener("click", function () { activate(it); });
+          menu.appendChild(mi);
+        });
+        document.body.appendChild(menu);
+        var r = b.getBoundingClientRect();
+        menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + "px";
+        menu.style.top = r.bottom + 2 + "px";
+        b.setAttribute("aria-expanded", "true");
+        openMenu = { button: b, menu: menu };
+        menu.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") { closeMenu(); b.focus(); }
+        });
+      });
+      return b;
+    }
+
+    function groupEl(label, controls, id) {
+      var g = el("div", "ribbon-group");
+      if (id) g.dataset.group = id;
+      var row = el("div", "ribbon-controls");
+      controls.forEach(function (c) { row.appendChild(controlButton(c)); });
+      g.appendChild(row);
+      g.appendChild(el("div", "ribbon-group-label", label));
+      return g;
+    }
+
+    function show(which) {
+      closeMenu();
+      body.textContent = "";
+      if (which === "house") {
+        ribbon.tab.groups.forEach(function (g) { body.appendChild(groupEl(g.label, g.controls, g.id)); });
+      } else {
+        body.appendChild(groupEl(ribbon.groupLabel, ribbon.controls, ribbon.groupId));
+      }
+      $all("[data-rtab]").forEach(function (t) { t.setAttribute("aria-pressed", t.dataset.rtab === which ? "true" : "false"); });
+      $("#demo-ribbon-note").textContent = NOTES[which];
+    }
+    $all("[data-rtab]").forEach(function (t) {
+      t.addEventListener("mousedown", keepCursor);
+      t.addEventListener("click", function () { show(t.dataset.rtab); });
     });
+    show("house");
+
     document.addEventListener("mousedown", function (e) {
       if (openMenu && !openMenu.menu.contains(e.target) && !openMenu.button.contains(e.target)) closeMenu();
     });

@@ -6,7 +6,7 @@
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
   <Id>7F2005D5-C497-45BB-9366-CC398A6D4594</Id>
-  <Version>1.0.0.0</Version>
+  <Version>1.0.1.0</Version>
   <ProviderName>Legal Toolkit</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Legal Toolkit"/>
@@ -301,21 +301,6 @@
                   </Item>
                 </Items>
               </Control>
-              <Control xsi:type="Button" id="LT.clauses">
-                <Label resid="L.clauses"/>
-                <Supertip>
-                  <Title resid="T.clauses"/>
-                  <Description resid="D.clauses"/>
-                </Supertip>
-                <Icon>
-                  <bt:Image size="16" resid="Icon.clauses.16"/>
-                  <bt:Image size="32" resid="Icon.clauses.32"/>
-                  <bt:Image size="80" resid="Icon.clauses.80"/>
-                </Icon>
-                <Action xsi:type="ShowTaskpane">
-                  <SourceLocation resid="Url.clauses"/>
-                </Action>
-              </Control>
               <Control xsi:type="Button" id="LT.matter">
                 <Label resid="L.matter"/>
                 <Supertip>
@@ -405,9 +390,6 @@
         <bt:Image id="Icon.eraser.16" DefaultValue="https://ADDIN-HOST/assets/eraser-16.png"/>
         <bt:Image id="Icon.eraser.32" DefaultValue="https://ADDIN-HOST/assets/eraser-32.png"/>
         <bt:Image id="Icon.eraser.80" DefaultValue="https://ADDIN-HOST/assets/eraser-80.png"/>
-        <bt:Image id="Icon.clauses.16" DefaultValue="https://ADDIN-HOST/assets/clauses-16.png"/>
-        <bt:Image id="Icon.clauses.32" DefaultValue="https://ADDIN-HOST/assets/clauses-32.png"/>
-        <bt:Image id="Icon.clauses.80" DefaultValue="https://ADDIN-HOST/assets/clauses-80.png"/>
         <bt:Image id="Icon.matter.16" DefaultValue="https://ADDIN-HOST/assets/matter-16.png"/>
         <bt:Image id="Icon.matter.32" DefaultValue="https://ADDIN-HOST/assets/matter-32.png"/>
         <bt:Image id="Icon.matter.80" DefaultValue="https://ADDIN-HOST/assets/matter-80.png"/>
@@ -420,7 +402,6 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Url.attachments" DefaultValue="https://ADDIN-HOST/taskpane.html?view=attachments"/>
-        <bt:Url id="Url.clauses" DefaultValue="https://ADDIN-HOST/taskpane.html?view=clauses"/>
         <bt:Url id="Url.matter" DefaultValue="https://ADDIN-HOST/taskpane.html?view=matter"/>
         <bt:Url id="Url.check" DefaultValue="https://ADDIN-HOST/taskpane.html?view=check"/>
         <bt:Url id="Url.commands" DefaultValue="https://ADDIN-HOST/commands.html"/>
@@ -460,8 +441,6 @@
         <bt:String id="T.mark.draft" DefaultValue="Draft — For Discussion"/>
         <bt:String id="L.mark.remove" DefaultValue="Remove Markings"/>
         <bt:String id="T.mark.remove" DefaultValue="Remove Markings"/>
-        <bt:String id="L.clauses" DefaultValue="Clauses"/>
-        <bt:String id="T.clauses" DefaultValue="Standard Text"/>
         <bt:String id="L.matter" DefaultValue="Matter"/>
         <bt:String id="T.matter" DefaultValue="Matter Number"/>
         <bt:String id="L.check" DefaultValue="Pre-Send Check"/>
@@ -486,7 +465,6 @@
         <bt:String id="D.mark.withoutPrejudice" DefaultValue="Marks the email as written without prejudice."/>
         <bt:String id="D.mark.draft" DefaultValue="Marks the email as a draft for discussion purposes only."/>
         <bt:String id="D.mark.remove" DefaultValue="Removes markings added by Legal Toolkit from this email and its subject."/>
-        <bt:String id="D.clauses" DefaultValue="Insert the firm's standard paragraphs, or save your own."/>
         <bt:String id="D.matter" DefaultValue="Add a client-matter number to the subject or insert a reference line."/>
         <bt:String id="D.check" DefaultValue="Check recipients, attachments, hidden content in documents, markings and unfinished blanks before you send."/>
       </bt:LongStrings>

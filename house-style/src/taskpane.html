@@ -22,15 +22,16 @@
         <button type="button" class="btn btn-quiet" id="demo-reset">Reset sample</button>
       </div>
       <div class="compose">
-        <!-- Preview of the ribbon the add-in adds to Outlook's Message tab. -->
+        <!-- Preview of what the add-in adds to Outlook's ribbon. -->
         <div class="ribbon" id="demo-ribbon">
-          <div class="ribbon-tabs" aria-hidden="true"><span class="ribbon-tab is-active">Message</span><span class="ribbon-tab">Insert</span><span class="ribbon-tab">Options</span></div>
-          <div class="ribbon-body">
-            <div class="ribbon-group">
-              <div class="ribbon-controls" id="demo-ribbon-controls" role="toolbar" aria-label="House Style ribbon buttons"></div>
-              <div class="ribbon-group-label" id="demo-ribbon-label"></div>
-            </div>
+          <div class="ribbon-tabs">
+            <button type="button" class="ribbon-tab" data-rtab="message" aria-pressed="false">Message</button>
+            <span class="ribbon-tab is-inert" aria-hidden="true">Insert</span>
+            <span class="ribbon-tab is-inert" aria-hidden="true">Options</span>
+            <button type="button" class="ribbon-tab" data-rtab="house" aria-pressed="true">House Style</button>
           </div>
+          <div class="ribbon-body" id="demo-ribbon-body" role="toolbar" aria-label="House Style ribbon buttons"></div>
+          <p class="ribbon-note" id="demo-ribbon-note"></p>
         </div>
         <div class="compose-row"><span class="compose-label">To</span><span class="compose-value">Rania Haddad &lt;r.haddad@client.example&gt;</span></div>
         <div class="compose-row">

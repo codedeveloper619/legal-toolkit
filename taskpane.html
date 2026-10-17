@@ -23,7 +23,6 @@
 
   <nav class="tabs" role="tablist" aria-label="Toolkit sections">
     <button role="tab" type="button" data-view="attachments">Attachments</button>
-    <button role="tab" type="button" data-view="clauses">Clauses</button>
     <button role="tab" type="button" data-view="matter">Matter</button>
     <button role="tab" type="button" data-view="check">Check</button>
   </nav>
@@ -104,30 +103,6 @@
         <summary>Hidden content check</summary>
         <p class="hint">Looks inside Word, Excel and PowerPoint attachments for tracked changes, comments, hidden text, hidden sheets and speaker notes.</p>
         <button id="att-scan" class="secondary" type="button">Check attachments</button>
-      </details>
-    </section>
-
-    <!-- CLAUSES -->
-    <section id="view-clauses" class="view" hidden>
-      <input id="cl-search" type="search" placeholder="Search standard text" aria-label="Search standard text">
-      <div id="cl-fill" class="card fill" hidden>
-        <h3 id="cl-fill-title"></h3>
-        <p class="hint">Fill in the blanks. Anything left empty is inserted as <b>[insert …]</b> so the pre-send check catches it.</p>
-        <div id="cl-fields"></div>
-        <div class="row end">
-          <button id="cl-cancel" class="secondary" type="button">Cancel</button>
-          <button id="cl-insert" class="primary" type="button">Insert</button>
-        </div>
-      </div>
-      <div id="cl-list"></div>
-      <details class="card" id="cl-add">
-        <summary>Add your own text</summary>
-        <label>Title <input id="cl-new-title" type="text" maxlength="60"></label>
-        <label>Text
-          <textarea id="cl-new-text" rows="5" placeholder="Use {{Client name}} for blanks to fill in."></textarea>
-        </label>
-        <div class="row end"><button id="cl-save" class="primary" type="button">Save</button></div>
-        <p class="hint">Saved to your mailbox, so it follows you to other computers.</p>
       </details>
     </section>
 

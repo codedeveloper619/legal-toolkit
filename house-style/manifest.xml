@@ -10,7 +10,7 @@
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
   <Id>79b7f6bd-0a7d-492d-b786-35a2ade0e060</Id>
-  <Version>1.2.0.0</Version>
+  <Version>1.3.0.0</Version>
   <ProviderName>Ali Sharif Zu'bi</ProviderName>
   <DefaultLocale>en-GB</DefaultLocale>
   <DisplayName DefaultValue="House Style"/>
@@ -53,13 +53,16 @@
         <Host xsi:type="MailHost">
           <DesktopFormFactor>
             <FunctionFile resid="Commands.Url"/>
-            <!-- One group on the Message tab while writing an email. Outlook allows
-                 one group of up to six controls here, and Outlook on Mac can't show
-                 an add-in's own tab, so the tools sit in drop-down menus. -->
+            <!-- While writing an email:
+                 1. A group on the Message tab (one group of up to six controls is
+                    Outlook's limit). Outlook on Mac, on the web and new Outlook
+                    show this, because they don't show add-in tabs.
+                 2. A "House Style" tab with a button for each style. Only classic
+                    Outlook for Windows shows add-in tabs. -->
             <ExtensionPoint xsi:type="MessageComposeCommandSurface">
               <OfficeTab id="TabDefault">
                 <Group id="HS.Group">
-                  <Label resid="Group.Label"/>
+                  <Label resid="G.Group"/>
                   <Control xsi:type="Menu" id="HS.Text">
                     <Label resid="L.Text"/>
                     <Supertip>
@@ -365,9 +368,9 @@
                       <Description resid="T.Colour"/>
                     </Supertip>
                     <Icon>
-                      <bt:Image size="16" resid="I.ct-colour.16"/>
-                      <bt:Image size="32" resid="I.ct-colour.32"/>
-                      <bt:Image size="80" resid="I.ct-colour.80"/>
+                      <bt:Image size="16" resid="I.ct-fontcolour.16"/>
+                      <bt:Image size="32" resid="I.ct-fontcolour.32"/>
+                      <bt:Image size="80" resid="I.ct-fontcolour.80"/>
                     </Icon>
                     <Items>
                       <Item id="HS.Colour.auto">
@@ -748,6 +751,720 @@
                   </Control>
                 </Group>
               </OfficeTab>
+              <CustomTab id="HS.Tab">
+                <Group id="HT.G.body">
+                  <Label resid="G.HT.G.body"/>
+                  <Control xsi:type="Button" id="HT.body-1">
+                    <Label resid="L.HT.body-1"/>
+                    <Supertip>
+                      <Title resid="L.HT.body-1"/>
+                      <Description resid="T.HT.body-1"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-body-1.16"/>
+                      <bt:Image size="32" resid="I.st-body-1.32"/>
+                      <bt:Image size="80" resid="I.st-body-1.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_body_1</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.body-2">
+                    <Label resid="L.HT.body-2"/>
+                    <Supertip>
+                      <Title resid="L.HT.body-2"/>
+                      <Description resid="T.HT.body-2"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-body-2.16"/>
+                      <bt:Image size="32" resid="I.st-body-2.32"/>
+                      <bt:Image size="80" resid="I.st-body-2.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_body_2</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.body-3">
+                    <Label resid="L.HT.body-3"/>
+                    <Supertip>
+                      <Title resid="L.HT.body-3"/>
+                      <Description resid="T.HT.body-3"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-body-3.16"/>
+                      <bt:Image size="32" resid="I.st-body-3.32"/>
+                      <bt:Image size="80" resid="I.st-body-3.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_body_3</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+                <Group id="HT.G.head">
+                  <Label resid="G.HT.G.head"/>
+                  <Control xsi:type="Button" id="HT.head-1">
+                    <Label resid="L.HT.head-1"/>
+                    <Supertip>
+                      <Title resid="L.HT.head-1"/>
+                      <Description resid="T.HT.head-1"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-head-1.16"/>
+                      <bt:Image size="32" resid="I.st-head-1.32"/>
+                      <bt:Image size="80" resid="I.st-head-1.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_head_1</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.head-2">
+                    <Label resid="L.HT.head-2"/>
+                    <Supertip>
+                      <Title resid="L.HT.head-2"/>
+                      <Description resid="T.HT.head-2"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-head-2.16"/>
+                      <bt:Image size="32" resid="I.st-head-2.32"/>
+                      <bt:Image size="80" resid="I.st-head-2.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_head_2</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.head-3">
+                    <Label resid="L.HT.head-3"/>
+                    <Supertip>
+                      <Title resid="L.HT.head-3"/>
+                      <Description resid="T.HT.head-3"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-head-3.16"/>
+                      <bt:Image size="32" resid="I.st-head-3.32"/>
+                      <bt:Image size="80" resid="I.st-head-3.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_head_3</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+                <Group id="HT.G.quote">
+                  <Label resid="G.HT.G.quote"/>
+                  <Control xsi:type="Button" id="HT.quote-1">
+                    <Label resid="L.HT.quote-1"/>
+                    <Supertip>
+                      <Title resid="L.HT.quote-1"/>
+                      <Description resid="T.HT.quote-1"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-quote-1.16"/>
+                      <bt:Image size="32" resid="I.st-quote-1.32"/>
+                      <bt:Image size="80" resid="I.st-quote-1.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_quote_1</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.quote-2">
+                    <Label resid="L.HT.quote-2"/>
+                    <Supertip>
+                      <Title resid="L.HT.quote-2"/>
+                      <Description resid="T.HT.quote-2"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-quote-2.16"/>
+                      <bt:Image size="32" resid="I.st-quote-2.32"/>
+                      <bt:Image size="80" resid="I.st-quote-2.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_quote_2</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.quote-3">
+                    <Label resid="L.HT.quote-3"/>
+                    <Supertip>
+                      <Title resid="L.HT.quote-3"/>
+                      <Description resid="T.HT.quote-3"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-quote-3.16"/>
+                      <bt:Image size="32" resid="I.st-quote-3.32"/>
+                      <bt:Image size="80" resid="I.st-quote-3.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>style_quote_3</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+                <Group id="HT.G.lists">
+                  <Label resid="G.HT.G.lists"/>
+                  <Control xsi:type="Menu" id="HT.menu.alpha">
+                    <Label resid="L.HT.menu.alpha"/>
+                    <Supertip>
+                      <Title resid="L.HT.menu.alpha"/>
+                      <Description resid="T.HT.menu.alpha"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-alpha-1.16"/>
+                      <bt:Image size="32" resid="I.st-alpha-1.32"/>
+                      <bt:Image size="80" resid="I.st-alpha-1.80"/>
+                    </Icon>
+                    <Items>
+                      <Item id="HT.item.alpha-1">
+                        <Label resid="L.HT.item.alpha-1"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.alpha-1"/>
+                          <Description resid="T.HT.item.alpha-1"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-alpha-1.16"/>
+                          <bt:Image size="32" resid="I.st-alpha-1.32"/>
+                          <bt:Image size="80" resid="I.st-alpha-1.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_alpha_1</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.item.alpha-2">
+                        <Label resid="L.HT.item.alpha-2"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.alpha-2"/>
+                          <Description resid="T.HT.item.alpha-2"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-alpha-2.16"/>
+                          <bt:Image size="32" resid="I.st-alpha-2.32"/>
+                          <bt:Image size="80" resid="I.st-alpha-2.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_alpha_2</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.item.alpha-3">
+                        <Label resid="L.HT.item.alpha-3"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.alpha-3"/>
+                          <Description resid="T.HT.item.alpha-3"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-alpha-3.16"/>
+                          <bt:Image size="32" resid="I.st-alpha-3.32"/>
+                          <bt:Image size="80" resid="I.st-alpha-3.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_alpha_3</FunctionName>
+                        </Action>
+                      </Item>
+                    </Items>
+                  </Control>
+                  <Control xsi:type="Menu" id="HT.menu.roman">
+                    <Label resid="L.HT.menu.roman"/>
+                    <Supertip>
+                      <Title resid="L.HT.menu.roman"/>
+                      <Description resid="T.HT.menu.roman"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-roman-1.16"/>
+                      <bt:Image size="32" resid="I.st-roman-1.32"/>
+                      <bt:Image size="80" resid="I.st-roman-1.80"/>
+                    </Icon>
+                    <Items>
+                      <Item id="HT.item.roman-1">
+                        <Label resid="L.HT.item.roman-1"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.roman-1"/>
+                          <Description resid="T.HT.item.roman-1"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-roman-1.16"/>
+                          <bt:Image size="32" resid="I.st-roman-1.32"/>
+                          <bt:Image size="80" resid="I.st-roman-1.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_roman_1</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.item.roman-2">
+                        <Label resid="L.HT.item.roman-2"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.roman-2"/>
+                          <Description resid="T.HT.item.roman-2"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-roman-2.16"/>
+                          <bt:Image size="32" resid="I.st-roman-2.32"/>
+                          <bt:Image size="80" resid="I.st-roman-2.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_roman_2</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.item.roman-3">
+                        <Label resid="L.HT.item.roman-3"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.roman-3"/>
+                          <Description resid="T.HT.item.roman-3"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-roman-3.16"/>
+                          <bt:Image size="32" resid="I.st-roman-3.32"/>
+                          <bt:Image size="80" resid="I.st-roman-3.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_roman_3</FunctionName>
+                        </Action>
+                      </Item>
+                    </Items>
+                  </Control>
+                  <Control xsi:type="Menu" id="HT.menu.bullet">
+                    <Label resid="L.HT.menu.bullet"/>
+                    <Supertip>
+                      <Title resid="L.HT.menu.bullet"/>
+                      <Description resid="T.HT.menu.bullet"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.st-bullet-1.16"/>
+                      <bt:Image size="32" resid="I.st-bullet-1.32"/>
+                      <bt:Image size="80" resid="I.st-bullet-1.80"/>
+                    </Icon>
+                    <Items>
+                      <Item id="HT.item.bullet-1">
+                        <Label resid="L.HT.item.bullet-1"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.bullet-1"/>
+                          <Description resid="T.HT.item.bullet-1"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-bullet-1.16"/>
+                          <bt:Image size="32" resid="I.st-bullet-1.32"/>
+                          <bt:Image size="80" resid="I.st-bullet-1.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_bullet_1</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.item.bullet-2">
+                        <Label resid="L.HT.item.bullet-2"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.bullet-2"/>
+                          <Description resid="T.HT.item.bullet-2"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-bullet-2.16"/>
+                          <bt:Image size="32" resid="I.st-bullet-2.32"/>
+                          <bt:Image size="80" resid="I.st-bullet-2.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_bullet_2</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.item.bullet-3">
+                        <Label resid="L.HT.item.bullet-3"/>
+                        <Supertip>
+                          <Title resid="L.HT.item.bullet-3"/>
+                          <Description resid="T.HT.item.bullet-3"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.st-bullet-3.16"/>
+                          <bt:Image size="32" resid="I.st-bullet-3.32"/>
+                          <bt:Image size="80" resid="I.st-bullet-3.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>style_bullet_3</FunctionName>
+                        </Action>
+                      </Item>
+                    </Items>
+                  </Control>
+                </Group>
+                <Group id="HT.G.colour">
+                  <Label resid="G.HT.G.colour"/>
+                  <Control xsi:type="Menu" id="HT.Colour">
+                    <Label resid="L.HT.Colour"/>
+                    <Supertip>
+                      <Title resid="L.HT.Colour"/>
+                      <Description resid="T.HT.Colour"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.ct-fontcolour.16"/>
+                      <bt:Image size="32" resid="I.ct-fontcolour.32"/>
+                      <bt:Image size="80" resid="I.ct-fontcolour.80"/>
+                    </Icon>
+                    <Items>
+                      <Item id="HT.Colour.auto">
+                        <Label resid="L.HT.Colour.auto"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.auto"/>
+                          <Description resid="T.HT.Colour.auto"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-auto.16"/>
+                          <bt:Image size="32" resid="I.co-auto.32"/>
+                          <bt:Image size="80" resid="I.co-auto.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_auto</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.0">
+                        <Label resid="L.HT.Colour.0"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.0"/>
+                          <Description resid="T.HT.Colour.0"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-ffffff.16"/>
+                          <bt:Image size="32" resid="I.co-ffffff.32"/>
+                          <bt:Image size="80" resid="I.co-ffffff.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_0</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.1">
+                        <Label resid="L.HT.Colour.1"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.1"/>
+                          <Description resid="T.HT.Colour.1"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-1e1e1e.16"/>
+                          <bt:Image size="32" resid="I.co-1e1e1e.32"/>
+                          <bt:Image size="80" resid="I.co-1e1e1e.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_1</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.2">
+                        <Label resid="L.HT.Colour.2"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.2"/>
+                          <Description resid="T.HT.Colour.2"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-f3f3f1.16"/>
+                          <bt:Image size="32" resid="I.co-f3f3f1.32"/>
+                          <bt:Image size="80" resid="I.co-f3f3f1.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_2</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.3">
+                        <Label resid="L.HT.Colour.3"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.3"/>
+                          <Description resid="T.HT.Colour.3"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-8c8179.16"/>
+                          <bt:Image size="32" resid="I.co-8c8179.32"/>
+                          <bt:Image size="80" resid="I.co-8c8179.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_3</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.4">
+                        <Label resid="L.HT.Colour.4"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.4"/>
+                          <Description resid="T.HT.Colour.4"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-a41d30.16"/>
+                          <bt:Image size="32" resid="I.co-a41d30.32"/>
+                          <bt:Image size="80" resid="I.co-a41d30.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_4</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.5">
+                        <Label resid="L.HT.Colour.5"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.5"/>
+                          <Description resid="T.HT.Colour.5"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-8896a0.16"/>
+                          <bt:Image size="32" resid="I.co-8896a0.32"/>
+                          <bt:Image size="80" resid="I.co-8896a0.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_5</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.6">
+                        <Label resid="L.HT.Colour.6"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.6"/>
+                          <Description resid="T.HT.Colour.6"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-bac5c6.16"/>
+                          <bt:Image size="32" resid="I.co-bac5c6.32"/>
+                          <bt:Image size="80" resid="I.co-bac5c6.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_6</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.7">
+                        <Label resid="L.HT.Colour.7"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.7"/>
+                          <Description resid="T.HT.Colour.7"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-8c8179.16"/>
+                          <bt:Image size="32" resid="I.co-8c8179.32"/>
+                          <bt:Image size="80" resid="I.co-8c8179.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_7</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.8">
+                        <Label resid="L.HT.Colour.8"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.8"/>
+                          <Description resid="T.HT.Colour.8"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-63111d.16"/>
+                          <bt:Image size="32" resid="I.co-63111d.32"/>
+                          <bt:Image size="80" resid="I.co-63111d.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_8</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.9">
+                        <Label resid="L.HT.Colour.9"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.9"/>
+                          <Description resid="T.HT.Colour.9"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-566470.16"/>
+                          <bt:Image size="32" resid="I.co-566470.32"/>
+                          <bt:Image size="80" resid="I.co-566470.80"/>
+                        </Icon>
+                        <Action xsi:type="ExecuteFunction">
+                          <FunctionName>colour_9</FunctionName>
+                        </Action>
+                      </Item>
+                      <Item id="HT.Colour.more">
+                        <Label resid="L.HT.Colour.more"/>
+                        <Supertip>
+                          <Title resid="L.HT.Colour.more"/>
+                          <Description resid="T.HT.Colour.more"/>
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="I.co-more.16"/>
+                          <bt:Image size="32" resid="I.co-more.32"/>
+                          <bt:Image size="80" resid="I.co-more.80"/>
+                        </Icon>
+                        <Action xsi:type="ShowTaskpane">
+                          <SourceLocation resid="Taskpane.Url"/>
+                        </Action>
+                      </Item>
+                    </Items>
+                  </Control>
+                </Group>
+                <Group id="HT.G.mark">
+                  <Label resid="G.HT.G.mark"/>
+                  <Control xsi:type="Button" id="HT.Mark.privileged">
+                    <Label resid="L.HT.Mark.privileged"/>
+                    <Supertip>
+                      <Title resid="L.HT.Mark.privileged"/>
+                      <Description resid="T.HT.Mark.privileged"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.mk.16"/>
+                      <bt:Image size="32" resid="I.mk.32"/>
+                      <bt:Image size="80" resid="I.mk.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>mark_privileged</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Mark.wp">
+                    <Label resid="L.HT.Mark.wp"/>
+                    <Supertip>
+                      <Title resid="L.HT.Mark.wp"/>
+                      <Description resid="T.HT.Mark.wp"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.mk.16"/>
+                      <bt:Image size="32" resid="I.mk.32"/>
+                      <bt:Image size="80" resid="I.mk.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>mark_wp</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Mark.wpsatc">
+                    <Label resid="L.HT.Mark.wpsatc"/>
+                    <Supertip>
+                      <Title resid="L.HT.Mark.wpsatc"/>
+                      <Description resid="T.HT.Mark.wpsatc"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.mk.16"/>
+                      <bt:Image size="32" resid="I.mk.32"/>
+                      <bt:Image size="80" resid="I.mk.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>mark_wpsatc</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Mark.stc">
+                    <Label resid="L.HT.Mark.stc"/>
+                    <Supertip>
+                      <Title resid="L.HT.Mark.stc"/>
+                      <Description resid="T.HT.Mark.stc"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.mk.16"/>
+                      <bt:Image size="32" resid="I.mk.32"/>
+                      <bt:Image size="80" resid="I.mk.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>mark_stc</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Mark.draft">
+                    <Label resid="L.HT.Mark.draft"/>
+                    <Supertip>
+                      <Title resid="L.HT.Mark.draft"/>
+                      <Description resid="T.HT.Mark.draft"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.mk.16"/>
+                      <bt:Image size="32" resid="I.mk.32"/>
+                      <bt:Image size="80" resid="I.mk.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>mark_draft</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+                <Group id="HT.G.insert">
+                  <Label resid="G.HT.G.insert"/>
+                  <Control xsi:type="Button" id="HT.Tool.date">
+                    <Label resid="L.HT.Tool.date"/>
+                    <Supertip>
+                      <Title resid="L.HT.Tool.date"/>
+                      <Description resid="T.HT.Tool.date"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.tl-date.16"/>
+                      <bt:Image size="32" resid="I.tl-date.32"/>
+                      <bt:Image size="80" resid="I.tl-date.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>tool_date</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Tool.disclaimer">
+                    <Label resid="L.HT.Tool.disclaimer"/>
+                    <Supertip>
+                      <Title resid="L.HT.Tool.disclaimer"/>
+                      <Description resid="T.HT.Tool.disclaimer"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.tl-disclaimer.16"/>
+                      <bt:Image size="32" resid="I.tl-disclaimer.32"/>
+                      <bt:Image size="80" resid="I.tl-disclaimer.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>tool_disclaimer</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Tool.reference">
+                    <Label resid="L.HT.Tool.reference"/>
+                    <Supertip>
+                      <Title resid="L.HT.Tool.reference"/>
+                      <Description resid="T.HT.Tool.reference"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.tl-ref.16"/>
+                      <bt:Image size="32" resid="I.tl-ref.32"/>
+                      <bt:Image size="80" resid="I.tl-ref.80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.insert.Url"/>
+                    </Action>
+                  </Control>
+                </Group>
+                <Group id="HT.G.tools">
+                  <Label resid="G.HT.G.tools"/>
+                  <Control xsi:type="Button" id="HT.Tool.clear">
+                    <Label resid="L.HT.Tool.clear"/>
+                    <Supertip>
+                      <Title resid="L.HT.Tool.clear"/>
+                      <Description resid="T.HT.Tool.clear"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.tl-clear.16"/>
+                      <bt:Image size="32" resid="I.tl-clear.32"/>
+                      <bt:Image size="80" resid="I.tl-clear.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>tool_clear</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Tool.tidy">
+                    <Label resid="L.HT.Tool.tidy"/>
+                    <Supertip>
+                      <Title resid="L.HT.Tool.tidy"/>
+                      <Description resid="T.HT.Tool.tidy"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.tl-tidy.16"/>
+                      <bt:Image size="32" resid="I.tl-tidy.32"/>
+                      <bt:Image size="80" resid="I.tl-tidy.80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Tool.attachments">
+                    <Label resid="L.HT.Tool.attachments"/>
+                    <Supertip>
+                      <Title resid="L.HT.Tool.attachments"/>
+                      <Description resid="T.HT.Tool.attachments"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="I.tl-attach.16"/>
+                      <bt:Image size="32" resid="I.tl-attach.32"/>
+                      <bt:Image size="80" resid="I.tl-attach.80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.attachments.Url"/>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="HT.Open">
+                    <Label resid="L.HT.Open"/>
+                    <Supertip>
+                      <Title resid="L.HT.Open"/>
+                      <Description resid="T.HT.Open"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16"/>
+                      <bt:Image size="32" resid="Icon.32"/>
+                      <bt:Image size="80" resid="Icon.80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                      <SupportsPinning>true</SupportsPinning>
+                    </Action>
+                  </Control>
+                </Group>
+                <Label resid="Tab.Label"/>
+              </CustomTab>
             </ExtensionPoint>
           </DesktopFormFactor>
         </Host>
@@ -850,9 +1567,9 @@
           <bt:Image id="I.co-more.16" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/co-more-16.png"/>
           <bt:Image id="I.co-more.32" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/co-more-32.png"/>
           <bt:Image id="I.co-more.80" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/co-more-80.png"/>
-          <bt:Image id="I.ct-colour.16" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-colour-16.png"/>
-          <bt:Image id="I.ct-colour.32" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-colour-32.png"/>
-          <bt:Image id="I.ct-colour.80" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-colour-80.png"/>
+          <bt:Image id="I.ct-fontcolour.16" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-fontcolour-16.png"/>
+          <bt:Image id="I.ct-fontcolour.32" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-fontcolour-32.png"/>
+          <bt:Image id="I.ct-fontcolour.80" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-fontcolour-80.png"/>
           <bt:Image id="I.mk.16" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/mk-16.png"/>
           <bt:Image id="I.mk.32" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/mk-32.png"/>
           <bt:Image id="I.mk.80" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/mk-80.png"/>
@@ -877,6 +1594,9 @@
           <bt:Image id="I.ct-tools.16" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-tools-16.png"/>
           <bt:Image id="I.ct-tools.32" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-tools-32.png"/>
           <bt:Image id="I.ct-tools.80" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/ct-tools-80.png"/>
+          <bt:Image id="I.tl-tidy.16" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/tl-tidy-16.png"/>
+          <bt:Image id="I.tl-tidy.32" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/tl-tidy-32.png"/>
+          <bt:Image id="I.tl-tidy.80" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/assets/ribbon/tl-tidy-80.png"/>
         </bt:Images>
         <bt:Urls>
           <bt:Url id="Commands.Url" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/src/commands.html"/>
@@ -885,7 +1605,7 @@
           <bt:Url id="Taskpane.attachments.Url" DefaultValue="https://codedeveloper619.github.io/legal-toolkit/house-style/src/taskpane.html?tab=attachments"/>
         </bt:Urls>
         <bt:ShortStrings>
-          <bt:String id="Group.Label" DefaultValue="Ali Sharif Zu'bi"/>
+          <bt:String id="G.Group" DefaultValue="Ali Sharif Zu'bi"/>
           <bt:String id="L.Style.head-1" DefaultValue="Head"/>
           <bt:String id="L.Style.head-2" DefaultValue="Head 1"/>
           <bt:String id="L.Style.head-3" DefaultValue="Head 2"/>
@@ -918,7 +1638,7 @@
           <bt:String id="L.Colour.8" DefaultValue="Dark burgundy (Accent 5)"/>
           <bt:String id="L.Colour.9" DefaultValue="Charcoal blue (Accent 6)"/>
           <bt:String id="L.Colour.more" DefaultValue="More shades…"/>
-          <bt:String id="L.Colour" DefaultValue="Colour"/>
+          <bt:String id="L.Colour" DefaultValue="Font Colour"/>
           <bt:String id="L.Mark.privileged" DefaultValue="Privileged &amp; Confidential"/>
           <bt:String id="L.Mark.wp" DefaultValue="Without Prejudice"/>
           <bt:String id="L.Mark.wpsatc" DefaultValue="Without Prejudice Save as to Costs"/>
@@ -932,6 +1652,61 @@
           <bt:String id="L.Tool.attachments" DefaultValue="Rename or reorder attachments…"/>
           <bt:String id="L.Tools" DefaultValue="Tools"/>
           <bt:String id="L.Open" DefaultValue="House Style"/>
+          <bt:String id="G.HT.G.body" DefaultValue="Body"/>
+          <bt:String id="L.HT.body-1" DefaultValue="Body"/>
+          <bt:String id="L.HT.body-2" DefaultValue="Body 1"/>
+          <bt:String id="L.HT.body-3" DefaultValue="Body 2"/>
+          <bt:String id="G.HT.G.head" DefaultValue="Head"/>
+          <bt:String id="L.HT.head-1" DefaultValue="Head"/>
+          <bt:String id="L.HT.head-2" DefaultValue="Head 1"/>
+          <bt:String id="L.HT.head-3" DefaultValue="Head 2"/>
+          <bt:String id="G.HT.G.quote" DefaultValue="Quote"/>
+          <bt:String id="L.HT.quote-1" DefaultValue="Quote"/>
+          <bt:String id="L.HT.quote-2" DefaultValue="Quote 1"/>
+          <bt:String id="L.HT.quote-3" DefaultValue="Quote 2"/>
+          <bt:String id="G.HT.G.lists" DefaultValue="Lists"/>
+          <bt:String id="L.HT.item.alpha-1" DefaultValue="Alpha 1"/>
+          <bt:String id="L.HT.item.alpha-2" DefaultValue="Alpha 2"/>
+          <bt:String id="L.HT.item.alpha-3" DefaultValue="Alpha 3"/>
+          <bt:String id="L.HT.menu.alpha" DefaultValue="alpha (a)"/>
+          <bt:String id="L.HT.item.roman-1" DefaultValue="Roman 1"/>
+          <bt:String id="L.HT.item.roman-2" DefaultValue="Roman 2"/>
+          <bt:String id="L.HT.item.roman-3" DefaultValue="Roman 3"/>
+          <bt:String id="L.HT.menu.roman" DefaultValue="roman (i)"/>
+          <bt:String id="L.HT.item.bullet-1" DefaultValue="Bullet 1"/>
+          <bt:String id="L.HT.item.bullet-2" DefaultValue="Bullet 2"/>
+          <bt:String id="L.HT.item.bullet-3" DefaultValue="Bullet 3"/>
+          <bt:String id="L.HT.menu.bullet" DefaultValue="Bullets"/>
+          <bt:String id="G.HT.G.colour" DefaultValue="Font Colour"/>
+          <bt:String id="L.HT.Colour.auto" DefaultValue="Automatic"/>
+          <bt:String id="L.HT.Colour.0" DefaultValue="White (Background 1)"/>
+          <bt:String id="L.HT.Colour.1" DefaultValue="Black (Text 1)"/>
+          <bt:String id="L.HT.Colour.2" DefaultValue="Off-white (Background 2)"/>
+          <bt:String id="L.HT.Colour.3" DefaultValue="Taupe (Text 2)"/>
+          <bt:String id="L.HT.Colour.4" DefaultValue="Burgundy (Accent 1)"/>
+          <bt:String id="L.HT.Colour.5" DefaultValue="Slate grey (Accent 2)"/>
+          <bt:String id="L.HT.Colour.6" DefaultValue="Pale sage (Accent 3)"/>
+          <bt:String id="L.HT.Colour.7" DefaultValue="Taupe (Accent 4)"/>
+          <bt:String id="L.HT.Colour.8" DefaultValue="Dark burgundy (Accent 5)"/>
+          <bt:String id="L.HT.Colour.9" DefaultValue="Charcoal blue (Accent 6)"/>
+          <bt:String id="L.HT.Colour.more" DefaultValue="More shades…"/>
+          <bt:String id="L.HT.Colour" DefaultValue="Font Colour"/>
+          <bt:String id="G.HT.G.mark" DefaultValue="Marking"/>
+          <bt:String id="L.HT.Mark.privileged" DefaultValue="Privileged &amp; Confidential"/>
+          <bt:String id="L.HT.Mark.wp" DefaultValue="Without Prejudice"/>
+          <bt:String id="L.HT.Mark.wpsatc" DefaultValue="Without Prejudice Save as to Costs"/>
+          <bt:String id="L.HT.Mark.stc" DefaultValue="Subject to Contract"/>
+          <bt:String id="L.HT.Mark.draft" DefaultValue="Draft for discussion"/>
+          <bt:String id="G.HT.G.insert" DefaultValue="Insert"/>
+          <bt:String id="L.HT.Tool.date" DefaultValue="Date"/>
+          <bt:String id="L.HT.Tool.disclaimer" DefaultValue="Disclaimer"/>
+          <bt:String id="L.HT.Tool.reference" DefaultValue="Reference"/>
+          <bt:String id="G.HT.G.tools" DefaultValue="Tools"/>
+          <bt:String id="L.HT.Tool.clear" DefaultValue="Clear formatting"/>
+          <bt:String id="L.HT.Tool.tidy" DefaultValue="Tidy Email"/>
+          <bt:String id="L.HT.Tool.attachments" DefaultValue="Attachments"/>
+          <bt:String id="L.HT.Open" DefaultValue="House Style Pane"/>
+          <bt:String id="Tab.Label" DefaultValue="House Style"/>
         </bt:ShortStrings>
         <bt:LongStrings>
           <bt:String id="T.Style.head-1" DefaultValue="Heading, level 1. Select text to restyle it, or click where you want to write and type."/>
@@ -966,7 +1741,7 @@
           <bt:String id="T.Colour.8" DefaultValue="#63111D. Select text to colour it, or choose and type."/>
           <bt:String id="T.Colour.9" DefaultValue="#566470. Select text to colour it, or choose and type."/>
           <bt:String id="T.Colour.more" DefaultValue="Opens the House Style pane with all the theme shades."/>
-          <bt:String id="T.Colour" DefaultValue="The firm’s theme colours."/>
+          <bt:String id="T.Colour" DefaultValue="Colour the selected text, or the text you’re about to type, in the firm’s theme colours."/>
           <bt:String id="T.Mark.privileged" DefaultValue="Adds the “PRIVILEGED &amp; CONFIDENTIAL” banner and tags the subject. Choose again to remove it."/>
           <bt:String id="T.Mark.wp" DefaultValue="Adds the “WITHOUT PREJUDICE” banner and tags the subject. Choose again to remove it."/>
           <bt:String id="T.Mark.wpsatc" DefaultValue="Adds the “WITHOUT PREJUDICE SAVE AS TO COSTS” banner and tags the subject. Choose again to remove it."/>
@@ -980,6 +1755,52 @@
           <bt:String id="T.Tool.attachments" DefaultValue="Opens the pane to rename attachments or change their order."/>
           <bt:String id="T.Tools" DefaultValue="Clear formatting, date, disclaimer, references and attachments."/>
           <bt:String id="T.Open" DefaultValue="Opens the House Style pane with every tool, including Tidy and Attachments."/>
+          <bt:String id="T.HT.body-1" DefaultValue="Body text, level 1. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.body-2" DefaultValue="Body text, level 2. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.body-3" DefaultValue="Body text, level 3. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.head-1" DefaultValue="Heading, level 1. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.head-2" DefaultValue="Heading, level 2. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.head-3" DefaultValue="Heading, level 3. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.quote-1" DefaultValue="Indented quotation, level 1. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.quote-2" DefaultValue="Indented quotation, level 2. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.quote-3" DefaultValue="Indented quotation, level 3. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.alpha-1" DefaultValue="Lettered list: (a), (b), (c), level 1. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.alpha-2" DefaultValue="Lettered list: (a), (b), (c), level 2. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.alpha-3" DefaultValue="Lettered list: (a), (b), (c), level 3. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.menu.alpha" DefaultValue="Lettered list: (a), (b), (c). Choose a level; choose it again for the next item."/>
+          <bt:String id="T.HT.item.roman-1" DefaultValue="Numbered list: (i), (ii), (iii), level 1. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.roman-2" DefaultValue="Numbered list: (i), (ii), (iii), level 2. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.roman-3" DefaultValue="Numbered list: (i), (ii), (iii), level 3. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.menu.roman" DefaultValue="Numbered list: (i), (ii), (iii). Choose a level; choose it again for the next item."/>
+          <bt:String id="T.HT.item.bullet-1" DefaultValue="Bulleted list, level 1. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.bullet-2" DefaultValue="Bulleted list, level 2. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.item.bullet-3" DefaultValue="Bulleted list, level 3. Select text to restyle it, or click where you want to write and type."/>
+          <bt:String id="T.HT.menu.bullet" DefaultValue="Bulleted list. Choose a level; choose it again for the next item."/>
+          <bt:String id="T.HT.Colour.auto" DefaultValue="Black body text. Select text to change it, or choose and type."/>
+          <bt:String id="T.HT.Colour.0" DefaultValue="#FFFFFF. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.1" DefaultValue="#1E1E1E. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.2" DefaultValue="#F3F3F1. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.3" DefaultValue="#8C8179. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.4" DefaultValue="#A41D30. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.5" DefaultValue="#8896A0. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.6" DefaultValue="#BAC5C6. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.7" DefaultValue="#8C8179. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.8" DefaultValue="#63111D. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.9" DefaultValue="#566470. Select text to colour it, or choose and type."/>
+          <bt:String id="T.HT.Colour.more" DefaultValue="Opens the House Style pane with all the theme shades."/>
+          <bt:String id="T.HT.Colour" DefaultValue="Colour the selected text, or the text you’re about to type, in the firm’s theme colours."/>
+          <bt:String id="T.HT.Mark.privileged" DefaultValue="Adds the “PRIVILEGED &amp; CONFIDENTIAL” banner and tags the subject. Choose again to remove it."/>
+          <bt:String id="T.HT.Mark.wp" DefaultValue="Adds the “WITHOUT PREJUDICE” banner and tags the subject. Choose again to remove it."/>
+          <bt:String id="T.HT.Mark.wpsatc" DefaultValue="Adds the “WITHOUT PREJUDICE SAVE AS TO COSTS” banner and tags the subject. Choose again to remove it."/>
+          <bt:String id="T.HT.Mark.stc" DefaultValue="Adds the “SUBJECT TO CONTRACT” banner and tags the subject. Choose again to remove it."/>
+          <bt:String id="T.HT.Mark.draft" DefaultValue="Adds the “DRAFT — FOR DISCUSSION PURPOSES ONLY” banner and tags the subject. Choose again to remove it."/>
+          <bt:String id="T.HT.Tool.date" DefaultValue="Inserts today’s date, e.g. 17 October 2026."/>
+          <bt:String id="T.HT.Tool.disclaimer" DefaultValue="Inserts the firm disclaimer in small print."/>
+          <bt:String id="T.HT.Tool.reference" DefaultValue="Opens the pane to add Our ref, Your ref and Matter."/>
+          <bt:String id="T.HT.Tool.clear" DefaultValue="Turns the selected text into plain body text."/>
+          <bt:String id="T.HT.Tool.tidy" DefaultValue="Opens the House Style pane to tidy fonts, sizes and colours across the whole email (with Undo)."/>
+          <bt:String id="T.HT.Tool.attachments" DefaultValue="Opens the pane to rename attachments or change their order."/>
+          <bt:String id="T.HT.Open" DefaultValue="Opens the House Style pane with every tool. You can pin it open."/>
         </bt:LongStrings>
       </Resources>
     </VersionOverrides>
