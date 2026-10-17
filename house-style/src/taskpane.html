@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- build:head -->
+  <title>House Style for Outlook</title>
+  <!-- /build:head -->
+  <!-- build:remove -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <!-- /build:remove -->
+  <link rel="stylesheet" href="taskpane.css">
+</head>
+<body>
+  <script>document.documentElement.className += " js";</script>
+  <div class="layout">
+    <!-- Browser preview only: a mock compose window. Hidden inside Outlook. -->
+    <section id="demo" class="demo" hidden aria-label="Sample email">
+      <div class="demo-intro">
+        <p><strong>Preview.</strong> This is the add-in running outside Outlook against a sample email. Use the ribbon above the email, as in Outlook, or the House Style pane.</p>
+        <button type="button" class="btn btn-quiet" id="demo-reset">Reset sample</button>
+      </div>
+      <div class="compose">
+        <!-- Preview of the ribbon the add-in adds to Outlook's Message tab. -->
+        <div class="ribbon" id="demo-ribbon">
+          <div class="ribbon-tabs" aria-hidden="true"><span class="ribbon-tab is-active">Message</span><span class="ribbon-tab">Insert</span><span class="ribbon-tab">Options</span></div>
+          <div class="ribbon-body">
+            <div class="ribbon-group">
+              <div class="ribbon-controls" id="demo-ribbon-controls" role="toolbar" aria-label="House Style ribbon buttons"></div>
+              <div class="ribbon-group-label" id="demo-ribbon-label"></div>
+            </div>
+          </div>
+        </div>
+        <div class="compose-row"><span class="compose-label">To</span><span class="compose-value">Rania Haddad &lt;r.haddad@client.example&gt;</span></div>
+        <div class="compose-row">
+          <label class="compose-label" for="demo-subject">Subject</label>
+          <input id="demo-subject" class="compose-input" type="text" autocomplete="off">
+        </div>
+        <div class="compose-row compose-attachments" id="demo-attachments-row">
+          <span class="compose-label">Attached</span>
+          <ul id="demo-attachments" class="chips" aria-label="Attachments"></ul>
+        </div>
+        <div id="demo-notice" class="compose-notice" role="status" hidden><span id="demo-notice-text"></span><button type="button" class="link-btn" id="demo-notice-close" aria-label="Dismiss">Dismiss</button></div>
+        <div id="demo-body" class="sheet compose-body" contenteditable="true" spellcheck="false" aria-label="Message body"></div>
+      </div>
+    </section>
+
+    <main id="pane" class="pane">
+      <header class="pane-head">
+        <div class="monogram" aria-hidden="true" id="monogram">ASZ</div>
+        <div>
+          <h1>House Style</h1>
+          <p class="firm" id="firm-name">Ali Sharif Zu&#39;bi</p>
+        </div>
+      </header>
+
+      <!-- Shown only if the pane's script can't run (it hides this on start). -->
+      <div id="needs-script" class="notice notice-warn">
+        <span>The House Style pane couldn&rsquo;t start because scripts aren&rsquo;t running here. If you&rsquo;re looking at the preview file, download it and open it in a web browser such as Edge, Chrome or Safari.</span>
+      </div>
+
+      <div id="plain-warning" class="notice notice-warn" hidden>
+        This message is in plain text, so it can't hold formatting. Switch it to HTML in Outlook (Format Text &rsaquo; HTML), then try again.
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite" hidden>
+        <span id="status-text"></span>
+        <button type="button" id="status-undo" class="status-undo" hidden>Undo</button>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="House style tools">
+        <button type="button" role="tab" id="tab-format" aria-controls="panel-format" aria-selected="true">Format</button>
+        <button type="button" role="tab" id="tab-insert" aria-controls="panel-insert" aria-selected="false" tabindex="-1">Insert</button>
+        <button type="button" role="tab" id="tab-attachments" aria-controls="panel-attachments" aria-selected="false" tabindex="-1">Attachments<span class="tab-count" id="att-count" hidden></span></button>
+      </div>
+
+      <!-- FORMAT -->
+      <section id="panel-format" class="panel" role="tabpanel" aria-labelledby="tab-format">
+        <div class="group">
+          <h2>Text styles</h2>
+          <p class="help">Click where you want to write and choose a style, then type. Each time you choose a list style, the next item is numbered: (a), then (b), and so on. To restyle text that&rsquo;s already there, select it first.</p>
+          <div id="style-grid" class="style-grid" role="group" aria-label="Text styles"></div>
+        </div>
+
+        <div class="group">
+          <h2>Text colour</h2>
+          <p class="help">Choose a colour and type, or select text first to colour it.</p>
+          <button type="button" class="btn btn-block automatic" id="colour-auto"><span class="auto-swatch" aria-hidden="true"></span>Automatic</button>
+          <div class="palette">
+            <p class="palette-title" id="theme-title">Theme Colours</p>
+            <div id="theme-row" class="swatch-row" role="group" aria-labelledby="theme-title"></div>
+            <div id="shade-grid" class="swatch-grid" role="group" aria-label="Theme colour shades"></div>
+          </div>
+        </div>
+
+        <div class="group">
+          <h2>Clean up</h2>
+          <button type="button" class="btn btn-block" id="clear-format">Clear formatting from selection</button>
+          <div class="tidy">
+            <button type="button" class="btn btn-primary btn-block" id="tidy">Tidy whole email</button>
+            <label class="check"><input type="checkbox" id="tidy-colours" checked> Fix colours and highlighting</label>
+            <p class="help">Fixes stray fonts, sizes and colours from pasted text. Keeps bold, italics, links, theme colours and house styles. Your signature and the quoted thread below are left as they are.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INSERT -->
+      <section id="panel-insert" class="panel" role="tabpanel" aria-labelledby="tab-insert" hidden>
+        <div class="group">
+          <h2>Legal markings</h2>
+          <p class="help">Adds a banner to the top of the message. Choose a marking again to remove it.</p>
+          <div id="marking-list" class="marking-list"></div>
+          <label class="check"><input type="checkbox" id="mark-subject" checked> Also tag the subject line</label>
+        </div>
+
+        <div class="group">
+          <h2>References</h2>
+          <div class="field-grid">
+            <label for="ref-ours">Our ref</label>
+            <input id="ref-ours" type="text" placeholder="AZ/RH/12345" autocomplete="off">
+            <label for="ref-yours">Your ref</label>
+            <input id="ref-yours" type="text" placeholder="Optional" autocomplete="off">
+            <label for="ref-matter">Matter no.</label>
+            <input id="ref-matter" type="text" placeholder="12345-0001" autocomplete="off">
+          </div>
+          <label class="check"><input type="checkbox" id="ref-subject" checked> Add matter number to the subject</label>
+          <button type="button" class="btn btn-block" id="insert-ref">Insert reference line</button>
+        </div>
+
+        <div class="group">
+          <h2>Quick inserts</h2>
+          <p class="help">Inserted where your cursor is in the message.</p>
+          <div class="btn-row two">
+            <button type="button" class="btn" id="insert-date">Today&rsquo;s date<span class="sub" id="date-preview"></span></button>
+            <button type="button" class="btn" id="insert-disclaimer">Firm disclaimer<span class="sub">Small print</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ATTACHMENTS -->
+      <section id="panel-attachments" class="panel" role="tabpanel" aria-labelledby="tab-attachments" hidden>
+        <div class="group">
+          <div class="group-head">
+            <h2>Attachments</h2>
+            <button type="button" class="link-btn" id="att-reload">Reload</button>
+          </div>
+          <p class="help">Rename files, or drag them into a new order. Nothing changes in the email until you save.</p>
+
+          <div id="att-unsupported" class="notice notice-warn" hidden>
+            This version of Outlook doesn&rsquo;t let add-ins change attachments. It needs Outlook with Mailbox requirement set 1.8 or later (current Microsoft 365, new Outlook or Outlook on the web).
+          </div>
+          <div id="att-stale" class="notice notice-info" hidden>
+            <span>The attachments changed in Outlook while you were editing.</span>
+            <button type="button" class="link-btn" id="att-stale-reload">Reload</button>
+          </div>
+          <p id="att-empty" class="empty" hidden>No files attached yet. Attach files in Outlook and they&rsquo;ll appear here.</p>
+
+          <ol id="att-list" class="att-list" aria-label="Attachments in order"></ol>
+
+          <div id="att-fixed" class="att-fixed" hidden>
+            <p class="att-fixed-title">Can&rsquo;t be renamed or moved here</p>
+            <ul id="att-fixed-list"></ul>
+          </div>
+        </div>
+
+        <div class="group" id="att-tools">
+          <h2>Numbering</h2>
+          <div class="btn-row two">
+            <button type="button" class="btn" id="att-number">Number in this order</button>
+            <button type="button" class="btn" id="att-unnumber">Remove numbers</button>
+          </div>
+          <p class="help" id="att-number-help"></p>
+        </div>
+
+        <div class="group att-actions" id="att-actions">
+          <div class="btn-row two">
+            <button type="button" class="btn btn-primary" id="att-save" disabled>Save changes</button>
+            <button type="button" class="btn" id="att-discard" disabled>Discard</button>
+          </div>
+          <p class="help">Saving attaches a fresh copy of each changed file under its new name, then removes the old one. If anything goes wrong, the original files are kept.</p>
+        </div>
+      </section>
+
+      <footer class="pane-foot" id="pane-foot"></footer>
+    </main>
+  </div>
+
+  <script src="house-style.js"></script>
+  <script src="formatter.js"></script>
+  <script src="attachments.js"></script>
+  <script src="actions.js"></script>
+  <script src="outlook-host.js"></script>
+  <script src="ribbon.js"></script>
+  <script src="demo-sample.js"></script>
+  <script src="taskpane.js"></script>
+</body>
+</html>
