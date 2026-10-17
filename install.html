@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install Legal Toolkit</title>
+<link rel="icon" href="assets/icon-32.png">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --text: #1d2330; --soft: #5a6272; --line: #e1e4e9;
+    --accent: #1f4e79; --accent-hover: #173c5e; --on-accent: #fff; --tag: #e6eef6; --ok: #1e7b3c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17191c; --card: #212429; --text: #e8eaee; --soft: #a4abb8; --line: #343840;
+      --accent: #7fb0e6; --accent-hover: #a2c6ee; --on-accent: #0f1b28; --tag: #23364a; --ok: #6fcf8f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17191c; --card: #212429; --text: #e8eaee; --soft: #a4abb8; --line: #343840;
+    --accent: #7fb0e6; --accent-hover: #a2c6ee; --on-accent: #0f1b28; --tag: #23364a; --ok: #6fcf8f;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
+  header { display: flex; gap: 14px; align-items: center; margin-bottom: 8px; }
+  header img { width: 48px; height: 48px; border-radius: 11px; }
+  h1 { font-size: 28px; margin: 0; letter-spacing: -0.3px; }
+  .lede { color: var(--soft); margin: 4px 0 28px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; }
+  .card h2 { font-size: 19px; margin: 0 0 4px; }
+  .card .who { color: var(--soft); font-size: 14px; margin: 0 0 14px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; background: var(--tag); color: var(--accent); padding: 2px 8px; border-radius: 10px; vertical-align: 3px; margin-left: 6px; }
+  ol { padding-left: 22px; margin: 0; }
+  ol li { margin: 0 0 10px; padding-left: 4px; }
+  b.ui { font-weight: 600; }
+  .download { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  a.btn, button.btn {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--on-accent);
+    text-decoration: none; font-weight: 600; font-size: 15px; padding: 10px 18px; border-radius: 8px; border: 0; cursor: pointer;
+  }
+  a.btn:hover, button.btn:hover { background: var(--accent-hover); }
+  .muted { color: var(--soft); font-size: 14px; }
+  code { font: 13px ui-monospace, Menlo, Consolas, monospace; background: var(--bg); border: 1px solid var(--line); padding: 1px 5px; border-radius: 4px; word-break: break-all; }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; font-weight: 600; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px 18px; margin: 0; padding: 0; list-style: none; }
+  .features li { font-size: 14px; color: var(--soft); }
+  .features b { color: var(--text); display: block; font-size: 15px; }
+  .error { color: #b3261e; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/icon-128.png" alt="">
+    <div>
+      <h1>Legal Toolkit for Outlook</h1>
+    </div>
+  </header>
+  <p class="lede">Adds a <b>Legal Toolkit</b> group to the ribbon when you write an email in Outlook.</p>
+
+  <div class="card">
+    <h2>Step 1: Download the installer file</h2>
+    <p class="who">Everyone needs this file, whichever option you use below.</p>
+    <div class="download">
+      <a class="btn" id="dl" href="#" download="legal-toolkit-manifest.xml">Download installer file</a>
+      <span class="muted" id="dl-note">legal-toolkit-manifest.xml</span>
+    </div>
+    <p class="muted" id="where"></p>
+  </div>
+
+  <div class="card">
+    <h2>Step 2a: Whole firm <span class="tag">IT admin · recommended</span></h2>
+    <p class="who">Do this once. The toolkit then appears in everyone's Outlook automatically, on every computer (Mac and Windows) and in Outlook on the web. Nobody installs anything.</p>
+    <ol>
+      <li>Sign in to the <b>Microsoft 365 admin center</b> (admin.microsoft.com) as a Global or Exchange administrator.</li>
+      <li>Go to <b class="ui">Settings › Integrated apps</b> and choose <b class="ui">Upload custom apps</b>.</li>
+      <li>For app type choose <b class="ui">Office Add-in</b>, then <b class="ui">Upload manifest file (.xml) from device</b>, and pick the file from Step 1.</li>
+      <li>Choose who gets it: <b class="ui">Entire organization</b>, or a group (for example a pilot group first).</li>
+      <li>Accept the permission request (<i>read and write the email being written</i>) and press <b class="ui">Finish deployment</b>.</li>
+    </ol>
+    <p class="muted">The ribbon buttons usually appear within a few hours, sometimes up to 24. People may need to quit and reopen Outlook.</p>
+    <details>
+      <summary>Using Exchange Server on-premises instead?</summary>
+      <p class="muted">In the Exchange admin center, go to <b>Organization › Add-ins</b>, press <b>+</b>, choose <b>Add from file</b>, pick the file from Step 1, then set it to <b>Mandatory, always enabled</b> or <b>Optional, enabled by default</b>. Note that on-premises Exchange doesn't support some of the newer attachment features.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>Step 2b: Just for you <span class="tag">about 1 minute</span></h2>
+    <p class="who">Use this to try it before IT rolls it out. It installs into your mailbox, so it then shows up on all your computers.</p>
+    <ol>
+      <li>In Outlook, on the <b class="ui">Home</b> tab, click <b class="ui">Get Add-ins</b>. (In some versions it's under <b class="ui">…</b> on the ribbon, or <b class="ui">Tools › Get Add-ins</b>.)</li>
+      <li>Click <b class="ui">My add-ins</b>. Scroll down to <b class="ui">Custom add-ins</b>, click <b class="ui">+ Add a custom add-in</b>, then <b class="ui">Add from file…</b></li>
+      <li>Choose the file from Step 1 and click <b class="ui">Install</b>.</li>
+      <li>Open a <b>new email</b>. The <b>Legal Toolkit</b> buttons are on the <b class="ui">Message</b> tab.</li>
+    </ol>
+    <details>
+      <summary>Can't find Get Add-ins?</summary>
+      <p class="muted">Open <a href="https://aka.ms/olksideload" target="_blank" rel="noopener">aka.ms/olksideload</a> in a web browser and sign in with your work account. It opens the same add-ins window in Outlook on the web. Choose <b>My add-ins › Add a custom add-in › Add from file…</b>. It then appears in desktop Outlook too.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>What's on the ribbon</h2>
+    <ul class="features">
+      <li><b>Attachments</b>Reorder and rename, number as Exhibit A/B or Tab 1/2, add matter number or date, insert an attachment list.</li>
+      <li><b>Format</b>Heading, subheading, body text, bullets, numbered and (a)(b)(c) lists, quote block, all in the firm style.</li>
+      <li><b>Mark</b>Privileged &amp; confidential, work product, settlement, without prejudice, draft; added to the subject and the top of the email.</li>
+      <li><b>Clauses</b>Standard paragraphs with fill-in blanks, plus your own saved text.</li>
+      <li><b>Matter</b>Add the client-matter number to the subject or insert an "Our ref" line.</li>
+      <li><b>Pre-Send Check</b>Outside and look-alike recipients, forgotten attachments, unfinished blanks, and tracked changes or comments left in Word, Excel and PowerPoint files.</li>
+    </ul>
+    <p class="muted">Privacy: the toolkit runs entirely inside Outlook on your computer. Email content and attachments are never sent anywhere.</p>
+  </div>
+
+  <p class="muted">Works in Outlook for Mac (classic and new), Outlook for Windows (Microsoft 365) and Outlook on the web, with a Microsoft 365 or Exchange work mailbox.</p>
+</div>
+<script>
+(function () {
+  var base = location.href.replace(/[?#].*$/, "").replace(/[^/]*$/, "");
+  var link = document.getElementById("dl");
+  document.getElementById("where").innerHTML = "Hosted at <code></code>";
+  document.querySelector("#where code").textContent = base;
+  fetch("manifest.template.xml", { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("manifest.template.xml is missing next to this page");
+      return r.text();
+    })
+    .then(function (xml) {
+      if (base.indexOf("https://") !== 0) throw new Error("This page must be opened over https:// for the add-in to work");
+      var manifest = xml.split("https://ADDIN-HOST/").join(base);
+      link.href = URL.createObjectURL(new Blob([manifest], { type: "application/xml" }));
+    })
+    .catch(function (e) {
+      link.removeAttribute("href");
+      link.style.opacity = "0.5";
+      var note = document.getElementById("dl-note");
+      note.className = "error";
+      note.textContent = e.message + ".";
+    });
+})();
+</script>
+</body>
+</html>

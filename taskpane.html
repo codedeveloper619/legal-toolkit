@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legal Toolkit</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <script src="config.js"></script>
+  <script src="shared.js"></script>
+  <link rel="stylesheet" href="taskpane.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="assets/icon-32.png" alt="" width="20" height="20">
+      <span>Legal Toolkit</span>
+    </div>
+    <button id="open-settings" class="icon-btn" type="button" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M11.3 1.5l.4 2.1c.5.2 1 .5 1.4.8l2-.8 1.4 2.3-1.6 1.4c.1.5.1 1 0 1.5l1.6 1.4-1.4 2.3-2-.8c-.4.3-.9.6-1.4.8l-.4 2.1H8.7l-.4-2.1c-.5-.2-1-.5-1.4-.8l-2 .8-1.4-2.3 1.6-1.4c-.1-.5-.1-1 0-1.5L3.5 6.6l1.4-2.3 2 .8c.4-.3.9-.6 1.4-.8l.4-2.1h2.6zM10 7.2a2.8 2.8 0 100 5.6 2.8 2.8 0 000-5.6z" transform="translate(0 .9)"/></svg>
+    </button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Toolkit sections">
+    <button role="tab" type="button" data-view="attachments">Attachments</button>
+    <button role="tab" type="button" data-view="clauses">Clauses</button>
+    <button role="tab" type="button" data-view="matter">Matter</button>
+    <button role="tab" type="button" data-view="check">Check</button>
+  </nav>
+
+  <main>
+    <div id="not-in-outlook" class="callout warn" hidden>
+      Open this panel from the Legal Toolkit buttons in an Outlook email you are writing.
+    </div>
+
+    <!-- ATTACHMENTS -->
+    <section id="view-attachments" class="view" hidden>
+      <div class="section-head">
+        <h2>Attachments <span id="att-count" class="pill"></span></h2>
+        <button id="att-refresh" class="link" type="button">Refresh</button>
+      </div>
+      <p class="hint">Drag <span class="grip-inline">⋮⋮</span> or use the arrows to reorder. Edit a name to rename it. Nothing changes in the email until you press <b>Save to email</b>.</p>
+      <div id="att-unsupported" class="callout warn" hidden></div>
+      <ol id="att-list" class="att-list"></ol>
+      <div id="att-empty" class="empty" hidden>No attachments yet. Attach files to the email, then press <b>Refresh</b>.</div>
+      <p id="att-others" class="hint" hidden></p>
+
+      <div class="actions sticky" id="att-actions">
+        <button id="att-revert" class="secondary" type="button" disabled>Undo changes</button>
+        <button id="att-save" class="primary" type="button" disabled>Save to email</button>
+      </div>
+      <div id="att-progress" class="progress" hidden><div class="bar"><i></i></div><span></span></div>
+
+      <details class="card" id="att-tools">
+        <summary>Naming tools</summary>
+        <div class="grid2">
+          <label>Numbering
+            <select id="nm-scheme">
+              <option value="">None</option>
+              <option value="num">01, 02, 03</option>
+              <option value="tab">Tab 1, Tab 2</option>
+              <option value="exhibitA">Exhibit A, Exhibit B</option>
+              <option value="exhibit1">Exhibit 1, Exhibit 2</option>
+              <option value="schedule">Schedule 1, Schedule 2</option>
+              <option value="annex">Annex A, Annex B</option>
+              <option value="appendix">Appendix 1, Appendix 2</option>
+            </select>
+          </label>
+          <label>Start at
+            <input id="nm-start" type="text" inputmode="text" value="1" maxlength="4" aria-describedby="nm-start-hint">
+          </label>
+        </div>
+        <p class="hint" id="nm-start-hint">Use a number, or a letter for lettered schemes (e.g. C).</p>
+        <label>Prefix, e.g. matter number
+          <input id="nm-prefix" type="text" placeholder="12345-001">
+        </label>
+        <label class="check"><input type="checkbox" id="nm-date"> Add today's date (YYYY-MM-DD)</label>
+        <label class="check"><input type="checkbox" id="nm-tidy" checked> Tidy names (remove “Copy of”, “(1)”, underscores)</label>
+        <div class="grid2">
+          <label>Find <input id="nm-find" type="text"></label>
+          <label>Replace with <input id="nm-replace" type="text"></label>
+        </div>
+        <div class="row">
+          <button id="nm-apply" class="secondary" type="button">Apply to all names</button>
+          <button id="nm-sort" class="secondary" type="button">Sort A–Z</button>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>Insert attachment list</summary>
+        <p class="hint">Adds a numbered list of the attachment names where your cursor is in the email.</p>
+        <div class="row">
+          <select id="enc-label" aria-label="List heading">
+            <option>Attachments</option>
+            <option>Enclosures</option>
+            <option>Exhibits</option>
+            <option>Documents provided</option>
+          </select>
+          <button id="enc-insert" class="secondary" type="button">Insert list</button>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary>Hidden content check</summary>
+        <p class="hint">Looks inside Word, Excel and PowerPoint attachments for tracked changes, comments, hidden text, hidden sheets and speaker notes.</p>
+        <button id="att-scan" class="secondary" type="button">Check attachments</button>
+      </details>
+    </section>
+
+    <!-- CLAUSES -->
+    <section id="view-clauses" class="view" hidden>
+      <input id="cl-search" type="search" placeholder="Search standard text" aria-label="Search standard text">
+      <div id="cl-fill" class="card fill" hidden>
+        <h3 id="cl-fill-title"></h3>
+        <p class="hint">Fill in the blanks. Anything left empty is inserted as <b>[insert …]</b> so the pre-send check catches it.</p>
+        <div id="cl-fields"></div>
+        <div class="row end">
+          <button id="cl-cancel" class="secondary" type="button">Cancel</button>
+          <button id="cl-insert" class="primary" type="button">Insert</button>
+        </div>
+      </div>
+      <div id="cl-list"></div>
+      <details class="card" id="cl-add">
+        <summary>Add your own text</summary>
+        <label>Title <input id="cl-new-title" type="text" maxlength="60"></label>
+        <label>Text
+          <textarea id="cl-new-text" rows="5" placeholder="Use {{Client name}} for blanks to fill in."></textarea>
+        </label>
+        <div class="row end"><button id="cl-save" class="primary" type="button">Save</button></div>
+        <p class="hint">Saved to your mailbox, so it follows you to other computers.</p>
+      </details>
+    </section>
+
+    <!-- MATTER -->
+    <section id="view-matter" class="view" hidden>
+      <h2>Matter number</h2>
+      <label>Client–matter number
+        <input id="mt-number" type="text" placeholder="12345-001" autocomplete="off">
+      </label>
+      <label>Matter name <span class="opt">(optional)</span>
+        <input id="mt-name" type="text" placeholder="Smith v Jones" autocomplete="off">
+      </label>
+      <div class="row">
+        <button id="mt-subject" class="primary" type="button">Add to subject</button>
+        <button id="mt-ref" class="secondary" type="button">Insert reference line</button>
+      </div>
+      <button id="mt-remove" class="link" type="button">Remove matter number from subject</button>
+      <h3 class="sub">Recent matters</h3>
+      <ul id="mt-recent" class="chips"></ul>
+      <p id="mt-recent-empty" class="hint">Matters you use appear here.</p>
+    </section>
+
+    <!-- CHECK -->
+    <section id="view-check" class="view" hidden>
+      <div id="ck-summary" class="summary"></div>
+      <ul id="ck-results" class="results"></ul>
+      <div class="row">
+        <button id="ck-run" class="primary" type="button">Run check again</button>
+      </div>
+      <p class="hint">This check is a safety net. Always read the email and its recipients before sending.</p>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="view-settings" class="view" hidden>
+      <div class="section-head">
+        <h2>Settings</h2>
+        <button id="st-back" class="link" type="button">Done</button>
+      </div>
+      <label>Firm email domains
+        <input id="st-domains" type="text" placeholder="yourfirm.com, yourfirm.co.uk">
+      </label>
+      <p class="hint">Recipients outside these domains are treated as external.</p>
+      <div class="grid2">
+        <label>Font
+          <select id="st-font">
+            <option value="Calibri, Arial, Helvetica, sans-serif">Calibri</option>
+            <option value="Aptos, Calibri, Arial, sans-serif">Aptos</option>
+            <option value="Arial, Helvetica, sans-serif">Arial</option>
+            <option value="Helvetica, Arial, sans-serif">Helvetica</option>
+            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+            <option value="Georgia, 'Times New Roman', serif">Georgia</option>
+            <option value="Garamond, 'Times New Roman', serif">Garamond</option>
+            <option value="'Book Antiqua', Palatino, serif">Book Antiqua</option>
+            <option value="Verdana, Geneva, sans-serif">Verdana</option>
+          </select>
+        </label>
+        <label>Text size
+          <select id="st-size">
+            <option value="10">10 pt</option>
+            <option value="10.5">10.5 pt</option>
+            <option value="11">11 pt</option>
+            <option value="12">12 pt</option>
+          </select>
+        </label>
+      </div>
+      <label>Heading colour <input id="st-color" type="color"></label>
+      <label class="check"><input type="checkbox" id="st-require-matter"> Warn when the subject has no matter number</label>
+      <div class="card preview" id="st-preview" aria-label="Preview"></div>
+      <div class="row end">
+        <button id="st-reset" class="secondary" type="button">Use firm defaults</button>
+        <button id="st-save" class="primary" type="button">Save</button>
+      </div>
+      <p class="hint">Saved to your mailbox, so your settings follow you to other computers.</p>
+      <p class="hint muted" id="st-version"></p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="taskpane.js"></script>
+</body>
+</html>
